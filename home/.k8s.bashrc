@@ -19,3 +19,4 @@ alias klnod='kubectl get node'
 # Shortcuts
 an="--all-namespaces"
 do="--dry-run=client -oyaml"
+fg="--force --grace-period 0"
