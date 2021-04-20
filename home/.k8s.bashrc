@@ -1,4 +1,6 @@
 # Custom Bashrc for K8s
+# To install:
+#   echo "source .k8s.bashrc" >> ~/.bashrc
 
 # Base alias
 alias k=kubectl
