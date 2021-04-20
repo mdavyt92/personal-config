@@ -1,0 +1,27 @@
+#!/bin/bash
+
+if [ $# -le 0 ]; then
+	echo "Usage: hashusb DEVICE [COUNT]"
+  exit 0
+fi
+
+DEVICE=$1
+
+if [ $# -eq 2 ]; then
+	COUNT=$2
+else
+	#Get number of sectors from fdisk
+	COUNT=`sudo fdisk -l $1 | grep sectors$ | awk '{print $(NF-1)}'
+	COUNT=$((COUNT+1))
+fi
+
+OUTPUT=`sudo dd if=$DEVICE count=$COUNT | tee >(md5sum) >(sha1sum) >(sha256sum) >/dev/null`
+
+IFS='- ' read -a HASHES <<< $OUTPUT
+
+echo
+echo -e "DEVICE \t \t $1"
+echo -e "SECTORS\t \t $COUNT"
+echo -e "MD5SUM \t \t ${HASHES[2]}"
+echo -e "SHA1SUM\t \t ${HASHES[1]}"
+echo -e "SHA256SUM\t \t ${HASHES[0]}"
