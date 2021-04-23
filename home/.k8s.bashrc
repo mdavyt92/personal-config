@@ -1,7 +1,7 @@
 # Custom Bashrc for K8s
 # source .k8s.bashrc from ~/.bashrc
 
-which kubectl > /dev/null && {
+which kubectl &> /dev/null && {
     # Base alias
     alias k=kubectl
 
